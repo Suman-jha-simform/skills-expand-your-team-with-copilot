@@ -104,10 +104,26 @@
 
           <!-- Activities Content -->
           <div class="activities-content">
+            <!-- View toggle -->
+            <div class="view-toggle-container">
+              <button id="card-view-btn" class="view-toggle-btn active" title="Card View">
+                ⊞ Cards
+              </button>
+              <button id="calendar-view-btn" class="view-toggle-btn" title="Calendar View">
+                📅 Calendar
+              </button>
+            </div>
+
             <div id="activities-list">
               <!-- Activities will be loaded here -->
               <p>Loading activities...</p>
             </div>
+
+            <!-- Calendar view container -->
+            <div id="calendar-view" class="hidden">
+              <!-- Calendar will be rendered here -->
+            </div>
+
             <div id="message" class="hidden message"></div>
           </div>
         </div>
