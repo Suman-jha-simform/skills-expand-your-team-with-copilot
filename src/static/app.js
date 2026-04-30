@@ -518,6 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
       categoryOrder.forEach((type) => {
         if (!groups[type]) return;
         const typeInfo = activityTypes[type];
+        const activityCount = Object.keys(groups[type]).length;
 
         // Create group section header
         const groupSection = document.createElement("div");
@@ -530,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="activity-group-label" style="background-color: ${typeInfo.color}; color: ${typeInfo.textColor}">
             ${typeInfo.label}
           </span>
-          <span class="activity-group-count">${Object.keys(groups[type]).length} activit${Object.keys(groups[type]).length === 1 ? "y" : "ies"}</span>
+          <span class="activity-group-count">${activityCount} activit${activityCount === 1 ? "y" : "ies"}</span>
         `;
 
         const groupCards = document.createElement("div");
