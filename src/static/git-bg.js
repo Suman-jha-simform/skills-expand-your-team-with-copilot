@@ -22,8 +22,8 @@
   let animFrame;
 
   function resize() {
-    canvas.width = document.documentElement.scrollWidth;
-    canvas.height = document.documentElement.scrollHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     initBranches();
   }
 

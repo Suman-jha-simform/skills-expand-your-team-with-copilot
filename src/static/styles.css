@@ -72,7 +72,7 @@ body {
 
 header {
   text-align: center;
-  padding: 12px 0;
+  padding: 12px 15px;
   margin-bottom: 15px;
   background-color: var(--primary);
   color: var(--primary-text);
@@ -80,8 +80,11 @@ header {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 header h1 {
@@ -901,14 +904,6 @@ footer {
 }
 
 /* ── Mascots in the header ── */
-header {
-  flex-direction: row !important;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px 15px !important;
-}
-
 .header-title {
   text-align: center;
   flex: 1 1 auto;
@@ -942,6 +937,6 @@ header {
     display: none;
   }
   header {
-    flex-direction: column !important;
+    flex-direction: column;
   }
 }
