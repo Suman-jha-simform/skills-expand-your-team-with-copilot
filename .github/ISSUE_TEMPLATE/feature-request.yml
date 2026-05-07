@@ -1,5 +1,5 @@
-name: "Request an improvement"
-description: "Ask for a new feature or a better user experience."
+name: "Request a feature"
+description: "Ask for a new feature or user experience improvement."
 title: "[Feature]: "
 labels:
   - enhancement
@@ -50,4 +50,3 @@ body:
       placeholder: "Must be ready by ..., linked request: #..., keep ..."
     validations:
       required: true
-

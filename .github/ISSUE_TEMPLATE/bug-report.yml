@@ -20,7 +20,7 @@ body:
     id: steps
     attributes:
       label: Steps to reproduce
-      description: List clear steps so someone else can see the same problem.
+      description: List clear steps so others can see the same problem.
       placeholder: |
         1. Go to ...
         2. Click ...
@@ -53,4 +53,3 @@ body:
       placeholder: "Must keep ..., related issue: #..., do not change ..."
     validations:
       required: true
-
