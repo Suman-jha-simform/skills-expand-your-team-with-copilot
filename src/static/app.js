@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentTimeRange = "";
   let currentDifficulty = "";
   let currentView = "card"; // "card" or "calendar"
+  let currentGroupBy = "none"; // "none" or "category"
 
   // Calendar constants
   const CALENDAR_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -511,6 +512,49 @@ document.addEventListener("DOMContentLoaded", () => {
     // Render based on current view
     if (currentView === "calendar") {
       renderCalendarView(filteredActivities);
+    } else if (currentGroupBy === "category") {
+      // Group activities by category
+      const groups = {};
+      Object.entries(filteredActivities).forEach(([name, details]) => {
+        const type = getActivityType(name, details.description);
+        if (!groups[type]) {
+          groups[type] = {};
+        }
+        groups[type][name] = details;
+      });
+
+      // Render each category group in a defined order
+      const categoryOrder = ["sports", "arts", "academic", "community", "technology"];
+      categoryOrder.forEach((type) => {
+        if (!groups[type]) return;
+        const typeInfo = activityTypes[type];
+        const activityCount = Object.keys(groups[type]).length;
+
+        // Create group section header
+        const groupSection = document.createElement("div");
+        groupSection.className = "activity-group";
+
+        const groupHeader = document.createElement("div");
+        groupHeader.className = "activity-group-header";
+        groupHeader.style.borderLeftColor = typeInfo.textColor;
+        groupHeader.innerHTML = `
+          <span class="activity-group-label" style="background-color: ${typeInfo.color}; color: ${typeInfo.textColor}">
+            ${typeInfo.label}
+          </span>
+          <span class="activity-group-count">${activityCount} activit${activityCount === 1 ? "y" : "ies"}</span>
+        `;
+
+        const groupCards = document.createElement("div");
+        groupCards.className = "activity-group-cards";
+
+        Object.entries(groups[type]).forEach(([name, details]) => {
+          renderActivityCard(name, details, groupCards);
+        });
+
+        groupSection.appendChild(groupHeader);
+        groupSection.appendChild(groupCards);
+        activitiesList.appendChild(groupSection);
+      });
     } else {
       // Display filtered activities as cards
       Object.entries(filteredActivities).forEach(([name, details]) => {
@@ -520,7 +564,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to render a single activity card
-  function renderActivityCard(name, details) {
+  function renderActivityCard(name, details, container) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";
 
@@ -634,7 +678,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    activitiesList.appendChild(activityCard);
+    (container || activitiesList).appendChild(activityCard);
   }
 
   // ── Calendar view helpers ────────────────────────────────────────────────

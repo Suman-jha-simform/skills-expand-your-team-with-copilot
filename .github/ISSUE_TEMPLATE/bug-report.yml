@@ -1,0 +1,55 @@
+name: "Fix a problem (bug)"
+description: "Report something that is broken for students or teachers."
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form when something is not working as expected.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem description
+      description: What is happening now, and what should happen instead?
+      placeholder: "When I ..., the page .... I expected ...."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List clear steps so others can see the same problem.
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. See error ...
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How will we know this issue is complete?
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: hints
+    attributes:
+      label: Hints, tips, or suggested solution
+      description: Share ideas about likely cause or preferred fix.
+      placeholder: "Maybe this started after ..., or we should update ..."
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Limitations and context
+      description: Include deadlines, rules, related links, or anything to avoid.
+      placeholder: "Must keep ..., related issue: #..., do not change ..."
+    validations:
+      required: true
