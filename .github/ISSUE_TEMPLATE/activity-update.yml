@@ -61,4 +61,3 @@ body:
       placeholder: "Must be published before ..., approved by ..., related: #..."
     validations:
       required: true
-
