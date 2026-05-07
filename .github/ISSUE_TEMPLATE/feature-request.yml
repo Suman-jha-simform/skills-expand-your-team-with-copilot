@@ -1,0 +1,53 @@
+name: "Request an improvement"
+description: "Ask for a new feature or a better user experience."
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for improvements to the student and teacher experience.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem description
+      description: What challenge are users facing today?
+      placeholder: "Teachers/students struggle to ... because ..."
+    validations:
+      required: true
+  - type: textarea
+    id: desired
+    attributes:
+      label: Proposed change
+      description: Describe the new behavior or feature you want.
+      placeholder: "Add a way to ... so users can ..."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Add a checklist of outcomes required for this to be done.
+      placeholder: |
+        - [ ] Users can ...
+        - [ ] Teachers can ...
+    validations:
+      required: true
+  - type: textarea
+    id: hints
+    attributes:
+      label: Hints, tips, or suggested solution
+      description: Share examples, ideas, or preferred direction.
+      placeholder: "Similar to ..., maybe use ..., avoid ..."
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Limitations and context
+      description: Include scope, deadlines, related issues, or extra context.
+      placeholder: "Must be ready by ..., linked request: #..., keep ..."
+    validations:
+      required: true
+

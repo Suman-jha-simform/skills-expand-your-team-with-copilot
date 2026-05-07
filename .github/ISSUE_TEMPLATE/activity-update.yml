@@ -1,0 +1,64 @@
+name: "Update activity content or schedule"
+description: "Request updates to activity names, descriptions, capacity, or schedule."
+title: "[Activity Update]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for common school content updates.
+  - type: input
+    id: activity-name
+    attributes:
+      label: Activity name
+      description: Which activity should be updated?
+      placeholder: "Debate Team"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem description
+      description: What is wrong or outdated in the current activity details?
+      placeholder: "The schedule says ... but it should ..."
+    validations:
+      required: true
+  - type: textarea
+    id: requested-change
+    attributes:
+      label: Requested update
+      description: Provide the exact content changes you want.
+      placeholder: |
+        - Schedule: ...
+        - Description: ...
+        - Capacity: ...
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: What must be true after the update is complete?
+      placeholder: |
+        - [ ] Activity card shows ...
+        - [ ] Registration limit is ...
+    validations:
+      required: true
+  - type: textarea
+    id: hints
+    attributes:
+      label: Hints, tips, or suggested solution
+      description: Add examples, source links, or guidance for implementation.
+      placeholder: "Use the details from ..., keep format like ..."
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Limitations and context
+      description: Include deadlines, approvals needed, and related issues.
+      placeholder: "Must be published before ..., approved by ..., related: #..."
+    validations:
+      required: true
+
