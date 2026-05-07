@@ -1,4 +1,4 @@
-name: "Update activity content or schedule"
+name: "New Activity Content"
 description: "Request updates to activity names, descriptions, capacity, or schedule."
 title: "[Activity Update]: "
 labels:
