@@ -1,12 +1,32 @@
 {
-  "hooks": [
-    {
-      "event": "sessionStart",
-      "run": "bash .github/hooks/scripts/log-session-start.sh"
-    },
-    {
-      "event": "preToolUse",
-      "run": "bash .github/hooks/scripts/log-tool-use.sh"
-    }
-  ]
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "mkdir -p logs && SESSION_ID=$(cat /proc/sys/kernel/random/uuid 2>/dev/null || uuidgen 2>/dev/null || date +%s%N) && echo \"{\\\"event\\\":\\\"session_start\\\",\\\"timestamp\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\",\\\"session_id\\\":\\\"${SESSION_ID}\\\",\\\"agent\\\":\\\"copilot\\\",\\\"cwd\\\":\\\"$(pwd)\\\",\\\"user\\\":\\\"$(whoami)\\\",\\\"hostname\\\":\\\"$(hostname)\\\"}\" >> logs/session.log && echo \"[SECURITY] Session started at $(date -u +%Y-%m-%dT%H:%M:%SZ)\"",
+        "powershell": "New-Item -ItemType Directory -Force -Path logs | Out-Null; $SessionId = [System.Guid]::NewGuid().ToString(); $Entry = @{ event='session_start'; timestamp=(Get-Date -Format 'yyyy-MM-ddTHH:mm:ssZ'); session_id=$SessionId; agent='copilot'; cwd=(Get-Location).Path; user=$env:USERNAME; hostname=$env:COMPUTERNAME } | ConvertTo-Json -Compress; Add-Content -Path logs/session.log -Value $Entry; Write-Host \"[SECURITY] Session started at $(Get-Date -Format 'yyyy-MM-ddTHH:mm:ssZ')\"",
+        "cwd": ".",
+        "timeoutSec": 10,
+        "env": {
+          "LOG_LEVEL": "INFO",
+          "LOG_DIR": "logs"
+        }
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "mkdir -p logs && TOOL_INPUT_JSON=$(cat) && TOOL_NAME=$(echo \"$TOOL_INPUT_JSON\" | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d.get('tool_name','unknown'))\" 2>/dev/null || echo 'unknown') && TOOL_INPUT=$(echo \"$TOOL_INPUT_JSON\" | python3 -c \"import sys,json; d=json.load(sys.stdin); print(json.dumps(d.get('tool_input',{})))\" 2>/dev/null || echo '{}') && echo \"{\\\"event\\\":\\\"tool_execution\\\",\\\"timestamp\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\",\\\"tool\\\":\\\"${TOOL_NAME}\\\",\\\"input\\\":${TOOL_INPUT},\\\"cwd\\\":\\\"$(pwd)\\\",\\\"user\\\":\\\"$(whoami)\\\"}\" >> logs/tool-executions.log && echo \"[SECURITY] Tool: ${TOOL_NAME} | Time: $(date -u +%H:%M:%SZ)\" >&2",
+        "powershell": "New-Item -ItemType Directory -Force -Path logs | Out-Null; $ToolInput = $input | ConvertFrom-Json; $Entry = @{ event='tool_execution'; timestamp=(Get-Date -Format 'yyyy-MM-ddTHH:mm:ssZ'); tool=$ToolInput.tool_name; input=$ToolInput.tool_input; cwd=(Get-Location).Path; user=$env:USERNAME } | ConvertTo-Json -Compress; Add-Content -Path logs/tool-executions.log -Value $Entry; Write-Host \"[SECURITY] Tool: $($ToolInput.tool_name) | Time: $(Get-Date -Format 'HH:mm:ssZ')\"",
+        "cwd": ".",
+        "timeoutSec": 15,
+        "env": {
+          "LOG_LEVEL": "INFO",
+          "LOG_DIR": "logs",
+          "SECURITY_MODE": "audit"
+        }
+      }
+    ]
+  }
 }
