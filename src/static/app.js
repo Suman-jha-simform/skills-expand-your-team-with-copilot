@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryFilters = document.querySelectorAll(".category-filter");
   const dayFilters = document.querySelectorAll(".day-filter");
   const timeFilters = document.querySelectorAll(".time-filter");
+  const difficultyFilters = document.querySelectorAll(".difficulty-filter");
 
   // Authentication elements
   const loginButton = document.getElementById("login-button");
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let searchQuery = "";
   let currentDay = "";
   let currentTimeRange = "";
+  let currentDifficulty = "";
   let currentView = "card"; // "card" or "calendar"
   let currentGroupBy = "none"; // "none" or "category"
 
@@ -477,6 +479,14 @@ document.addEventListener("DOMContentLoaded", () => {
         !searchableContent.includes(searchQuery.toLowerCase())
       ) {
         return;
+      }
+
+      // Apply difficulty filter
+      if (currentDifficulty !== "") {
+        const activityDifficulty = details.difficulty || "";
+        if (activityDifficulty !== "" && activityDifficulty !== currentDifficulty) {
+          return;
+        }
       }
 
       // Activity passed all filters, add to filtered list
@@ -920,13 +930,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Add event listeners for group-by buttons
-  const groupByButtons = document.querySelectorAll(".group-by-btn");
-  groupByButtons.forEach((button) => {
+  // Add event listeners for difficulty filter buttons
+  difficultyFilters.forEach((button) => {
     button.addEventListener("click", () => {
-      groupByButtons.forEach((btn) => btn.classList.remove("active"));
+      // Update active class
+      difficultyFilters.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
-      currentGroupBy = button.dataset.group;
+
+      // Update current difficulty filter and display filtered activities
+      currentDifficulty = button.dataset.difficulty;
       displayFilteredActivities();
     });
   });
